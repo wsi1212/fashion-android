@@ -1,5 +1,6 @@
 package com.example.myapplication.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.RetrofitClient
@@ -19,26 +20,14 @@ class SearchViewModel : ViewModel(){
     private val _uiState = MutableStateFlow(HomeState())
     val uiState = _uiState.asStateFlow()
 
-    private fun updateIsLoading(isLoading: Boolean){
-        _uiState.update { it.copy(isLoading = isLoading) }
-    }
-
-    private fun updateSearchResult(images: List<String>){
-        _uiState.update { it.copy(images = images) }
-    }
-
-    fun updateSearchText(data : String){
-        _uiState.update { it.copy(searchText = data) }
-    }
-
     fun search(keyword: String) {
-        updateIsLoading(true)
+        _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = RetrofitClient.apiService.getCrawledImages(keyword, 10).execute()
+                val response = RetrofitClient.apiService.getCrawledImages(keyword + " 패션").execute()
                 if (response.isSuccessful) {
                     val images = response.body()?.images ?: emptyList()
-                    updateSearchResult(images)
+                    _uiState.update { it.copy(images = images) }
                 } else {
                     println("API 오류: ${response.errorBody()?.string()}")
                 }
@@ -46,8 +35,9 @@ class SearchViewModel : ViewModel(){
                 println("서버 오류: ${e.message}")
             } catch (e: Exception) {
                 println("네트워크 오류: ${e.message}")
+            } finally {
+                _uiState.update { it.copy(isLoading = false) }
             }
-            updateIsLoading(false)
         }
     }
 }
