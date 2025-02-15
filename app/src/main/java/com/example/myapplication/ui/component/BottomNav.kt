@@ -35,18 +35,19 @@ class View(
 fun BottomNav(navController: NavController,modifier: Modifier){
     val views = listOf(
         View(
-            icon = R.drawable.wishlist_icon,
-            route = "wishlist",
+            icon = R.drawable.home_icon,
+            route = "home",
         ),
         View(
-            icon = R.drawable.combination_icon,
-            route = "combination",
+            icon = R.drawable.wishlist_icon,
+            route = "wishlist",
         )
     )
     Box(
         modifier = modifier.background(Transparent)
     ){
         NavigationBar(
+            tonalElevation = 10.dp,
             modifier = Modifier.align(Alignment.BottomCenter),
             containerColor = Color(0xFFF4F4F4),
             content = {
@@ -61,6 +62,7 @@ fun BottomNav(navController: NavController,modifier: Modifier){
                         ),
                         icon = {
                             Icon(
+                                modifier = Modifier.size(32.dp),
                                 painter = painterResource(view.icon),
                                 contentDescription = "",
                                 tint = if (currentRoute(navController) == view.route) Color.Black else Color(0xFFBBBBBB)
@@ -78,9 +80,9 @@ fun BottomNav(navController: NavController,modifier: Modifier){
             Modifier
                 .align(Alignment.TopCenter)
                 .padding(bottom = 40.dp)
-                .size(100.dp,100.dp)
+                .size(80.dp,80.dp)
                 .clip(CircleShape)
-                .background(Color(0xFF848484))
+                .background(Color(0xFF00A5B7))
                 .clickable { Log.d("fasd","adf") }
         ){
             Image(
