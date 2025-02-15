@@ -59,7 +59,7 @@ fun BottomNav(
         ),
         View(
             icon = R.drawable.wishlist_icon,
-            route = "wishlist",
+            route = "wearing",
             name = "찜 목록"
         )
     )
