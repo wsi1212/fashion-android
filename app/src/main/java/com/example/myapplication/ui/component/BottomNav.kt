@@ -47,7 +47,7 @@ fun BottomNav(navController: NavController){
             modifier = Modifier.align(Alignment.BottomCenter),
             containerColor = Color(0xFFF4F4F4),
             content = {
-                views.forEachIndexed { index, view ->
+                views.forEach {view ->
                     NavigationBarItem(
                         icon = {
                             Icon(
