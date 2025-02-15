@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
-import com.example.myapplication.ui.model.Clothes
+import com.example.myapplication.model.Clothes
 
 @Composable
 fun ClothesCard(item: Clothes, modifier: Modifier = Modifier) {
