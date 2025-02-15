@@ -74,7 +74,7 @@ fun MainNavGraph(navController: NavHostController){
                     WearingView()
                 }
             }
-            if (currentRoute != MainNavGroup.SEARCH) {
+            if (currentRoute != MainNavGroup.SEARCH && currentRoute != MainNavGroup.RESULT && currentRoute != MainNavGroup.WEARING && currentRoute != MainNavGroup.COMBINATION && currentRoute != MainNavGroup.OUTFIT) {
                 BottomNav(
                     navController,
                     modifier = Modifier.align(Alignment.BottomCenter)
