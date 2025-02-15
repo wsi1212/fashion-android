@@ -26,7 +26,7 @@ fun SearchBar(
     var searchKeyword by remember { mutableStateOf("") }
 
     Box(
-        modifier = modifier.fillMaxWidth().border(2.dp,Color(0xFF00A5B7), CircleShape)
+        modifier = modifier.fillMaxWidth().border(2.dp,Color(0xFF008BFF), CircleShape)
     ) {
         OutlinedTextField(
             value = searchKeyword,
@@ -42,7 +42,7 @@ fun SearchBar(
                 onDone = { onSearch(searchKeyword) }
             ),
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color.Transparent, // 포커스 시 테두리 제거
+                focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
                 containerColor = Color.White
             )
