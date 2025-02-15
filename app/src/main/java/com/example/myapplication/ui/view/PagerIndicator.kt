@@ -29,10 +29,10 @@ fun PagerIndicator(modifier: Modifier = Modifier, pagerState: PagerState) {
 
                 Box(
                     modifier = Modifier
-                        .padding(2.dp)
+                        .padding(4.dp)
                         .clip(CircleShape)
                         .background(color)
-                        .size(5.dp),
+                        .size(8.dp),
                 )
             }
         }

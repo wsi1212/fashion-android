@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.view
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +18,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,9 +42,6 @@ import com.example.myapplication.ui.component.SearchBar
 import com.example.myapplication.model.Clothes
 import com.example.myapplication.ui.theme.pretendard
 import com.example.myapplication.ui.toFigmaSp
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 
 @Composable
 fun HomeView(navController: NavController) {
@@ -281,26 +281,31 @@ private fun HumanClothes(item: Clothes, modifier: Modifier = Modifier){
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BannerImages(modifier: Modifier = Modifier) {
     val images = listOf(R.drawable.banner1, R.drawable.banner2) // 이미지 리소스 리스트
 
     // Pager 상태 관리
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState{2}
 
-    HorizontalPager(
-        count = images.size,
-        state = pagerState,
-        modifier = modifier.fillMaxWidth(),
-    ) { page ->
-        val image = images[page]
+    Box {
+        HorizontalPager(
+            state = pagerState,
+            modifier = modifier.fillMaxWidth(),
+        ) { page ->
+            val image = images[page]
 
-        Image(
-            painter = painterResource(id = image),
-            contentDescription = null,
-            modifier = modifier
-                .fillMaxWidth()
+            Image(
+                painter = painterResource(id = image),
+                contentDescription = null,
+                modifier = modifier
+                    .fillMaxWidth()
+            )
+        }
+        PagerIndicator(
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 10.dp),
+            pagerState = pagerState
         )
     }
 }
