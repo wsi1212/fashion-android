@@ -3,12 +3,14 @@ package com.example.myapplication.nav
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import com.example.myapplication.ui.component.BottomNav
 import com.example.myapplication.ui.view.CombinationView
@@ -34,6 +36,8 @@ object MainNavGroup {
 @Composable
 fun MainNavGraph(navController: NavHostController){
     val startDestination = MainNavGroup.HOME
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry?.destination?.route
     Box (
         modifier = Modifier.fillMaxSize(),
         content = {
@@ -70,8 +74,12 @@ fun MainNavGraph(navController: NavHostController){
                     WearingView()
                 }
             }
-            BottomNav(navController, modifier = Modifier
-                .align(Alignment.BottomCenter))
+            if (currentRoute != MainNavGroup.SEARCH) {
+                BottomNav(
+                    navController,
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                )
+            }
         },
 
     )

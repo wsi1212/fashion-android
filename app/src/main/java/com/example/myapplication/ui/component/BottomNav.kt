@@ -135,7 +135,7 @@ fun BottomNav(
         ) {
             Box(
                 Modifier
-                    .size(80.dp, 80.dp)
+                    .size(70.dp, 70.dp)
                     .clip(CircleShape)
                     .background(Color(0xFF008BFF))
                     .clickable {
@@ -150,7 +150,7 @@ fun BottomNav(
                     contentDescription = ""
                 )
             }
-            Spacer(Modifier.height(7.dp))
+            Spacer(Modifier.height(12.dp))
             Text(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 text = "입혀보기",
