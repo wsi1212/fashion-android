@@ -128,7 +128,7 @@ fun HomeView(navController: NavController) {
                         .padding(bottom = 11.dp)
                     ,
                     onSearch = {
-                        println(it)
+                        navController.navigate("search/$it")
                     }
                 )
             }
