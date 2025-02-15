@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.view
 
+import android.util.Log
 import android.widget.SearchView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,6 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,10 +48,14 @@ import com.example.myapplication.viewmodel.SearchViewModel
 
 @Composable
 fun SearchView(navController: NavController, keyword: String?) {
-    val viewModel = SearchViewModel()
+    val viewModel = remember { SearchViewModel() }
     val uiState by viewModel.uiState.collectAsState()
+    val resultText = if (uiState.searchText == "") keyword else uiState.searchText
     LaunchedEffect(Unit) {
         viewModel.search(keyword!!)
+    }
+    LaunchedEffect(uiState) {
+        Log.d("SearchView", "uiState: $uiState")
     }
     LazyColumn(
         modifier = Modifier
@@ -94,7 +100,7 @@ fun SearchView(navController: NavController, keyword: String?) {
         item {
             Row {
                 Text(
-                    "$keyword", fontFamily = pretendard,
+                    " $resultText", fontFamily = pretendard,
                     fontSize = 16.toFigmaSp().sp,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.padding(start = 16.dp)
@@ -108,7 +114,11 @@ fun SearchView(navController: NavController, keyword: String?) {
         }
         if (uiState.isLoading) {
             items(3) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp), horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
                     repeat(2) {
                         Box(
                             modifier = Modifier
@@ -122,10 +132,11 @@ fun SearchView(navController: NavController, keyword: String?) {
             }
         } else {
             items(uiState.images.chunked(2)) { rowImages ->
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
-                    Spacer(modifier = Modifier.width(16.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp), horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
                     rowImages.forEach { imageUrl ->
                         AsyncImage(
                             model = imageUrl,
@@ -133,7 +144,6 @@ fun SearchView(navController: NavController, keyword: String?) {
                             modifier = Modifier
                                 .width(161.dp)
                                 .height(250.dp)
-                                .padding(end = 16.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(Color.LightGray),
                             contentScale = ContentScale.Crop

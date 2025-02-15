@@ -8,7 +8,6 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("crawl_images/")
     fun getCrawledImages(
-        @Query("keyword") keyword: String,
-        @Query("limit") limit: Int = 10
+        @Query("keyword") keyword: String
     ): Call<ImageResponse>
 }
