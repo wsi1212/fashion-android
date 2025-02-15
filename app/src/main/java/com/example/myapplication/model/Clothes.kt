@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.model
+package com.example.myapplication.model
 
 data class Clothes(
     val name: String,

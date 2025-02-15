@@ -11,8 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.myapplication.ui.component.BottomNav
 import com.example.myapplication.ui.view.CombinationView
 import com.example.myapplication.ui.view.HomeView
@@ -25,7 +27,7 @@ import com.example.myapplication.ui.view.WishlistView
 
 object MainNavGroup {
     const val HOME = "home"
-    const val SEARCH = "search"
+    const val SEARCH = "search/{keyword}"
     const val OUTFIT = "outfit"
     const val INFORMATION = "information"
     const val WISHLIST = "wishlist"
@@ -45,10 +47,14 @@ fun MainNavGraph(navController: NavHostController){
                 startDestination = startDestination
             ){
                 composable(route = MainNavGroup.HOME) {
-                    HomeView()
+                    HomeView(navController)
                 }
-                composable(route = MainNavGroup.SEARCH) {
-                    SearchView()
+                composable(
+                    route = MainNavGroup.SEARCH,
+                    arguments = listOf(navArgument("keyword") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val keyword = backStackEntry.arguments?.getString("keyword")
+                    SearchView(navController, keyword)
                 }
                 composable(route = MainNavGroup.OUTFIT) {
                     OutfitView()
