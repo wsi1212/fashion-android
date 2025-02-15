@@ -1,9 +1,11 @@
 package com.example.myapplication.ui.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -23,16 +25,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.myapplication.R
 import com.example.myapplication.ui.component.ClothesCard
 import com.example.myapplication.ui.component.SearchBar
 import com.example.myapplication.model.Clothes
 import com.example.myapplication.ui.theme.pretendard
 import com.example.myapplication.ui.toFigmaSp
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 
 @Composable
 fun HomeView(navController: NavController) {
@@ -134,9 +143,7 @@ fun HomeView(navController: NavController) {
             }
         }
         item {
-            Box(
-                modifier = Modifier.fillMaxWidth().aspectRatio(4f / 3f).background(Color.Gray.copy(0.4f))
-            )
+            BannerImages()
         }
         item {
             Spacer(modifier = Modifier.height(48.dp))
@@ -274,4 +281,27 @@ private fun HumanClothes(item: Clothes, modifier: Modifier = Modifier){
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun BannerImages(modifier: Modifier = Modifier) {
+    val images = listOf(R.drawable.banner1, R.drawable.banner2) // 이미지 리소스 리스트
+
+    // Pager 상태 관리
+    val pagerState = rememberPagerState()
+
+    HorizontalPager(
+        count = images.size,
+        state = pagerState,
+        modifier = modifier.fillMaxWidth(),
+    ) { page ->
+        val image = images[page]
+
+        Image(
+            painter = painterResource(id = image),
+            contentDescription = null,
+            modifier = modifier
+                .fillMaxWidth()
+        )
+    }
+}
 

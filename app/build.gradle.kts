@@ -66,4 +66,5 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("com.google.accompanist:accompanist-pager:0.28.0")
 }
