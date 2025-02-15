@@ -42,14 +42,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.myapplication.R
 import com.example.myapplication.model.Clothes
 import com.example.myapplication.ui.theme.pretendard
 
-@Preview
 @Composable
-fun WearingView() {
+fun WearingView(navController: NavController) {
     val pagerState = rememberPagerState{2}
     val items = Array(30,{
         WearingViewClothes(
@@ -69,6 +69,7 @@ fun WearingView() {
                 .fillMaxWidth()
         ){
             Image(
+                modifier = Modifier.clickable { navController.popBackStack() },
                 painter = painterResource(R.drawable.back_icon),
                 contentDescription = "back"
                 )

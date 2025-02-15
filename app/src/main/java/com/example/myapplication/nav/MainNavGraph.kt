@@ -71,7 +71,7 @@ fun MainNavGraph(navController: NavHostController){
                     ResultView()
                 }
                 composable(route = MainNavGroup.WEARING) {
-                    WearingView()
+                    WearingView(navController)
                 }
             }
             if (currentRoute != MainNavGroup.SEARCH && currentRoute != MainNavGroup.RESULT && currentRoute != MainNavGroup.WEARING && currentRoute != MainNavGroup.COMBINATION && currentRoute != MainNavGroup.OUTFIT) {
