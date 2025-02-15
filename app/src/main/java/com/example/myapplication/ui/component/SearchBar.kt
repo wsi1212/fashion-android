@@ -27,9 +27,10 @@ import com.example.myapplication.ui.theme.pretendard
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    onSearch: (String) -> Unit
+    onSearch: (String) -> Unit,
+    defaultValue: String = ""
 ) {
-    var searchKeyword by remember { mutableStateOf("") }
+    var searchKeyword by remember { mutableStateOf(defaultValue) }
 
     Box(
         modifier = modifier

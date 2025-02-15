@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -129,17 +130,28 @@ fun HomeView(navController: NavController) {
             .background(Color.White)
     ) {
         item {
-            Box(modifier = Modifier.fillMaxWidth().height(125.dp).background(Color(0xFF008BFF))) {
-                SearchBar(
-                    modifier = Modifier
-                        .padding(horizontal = 18.dp)
-                        .align(Alignment.BottomCenter)
-                        .padding(bottom = 11.dp)
-                    ,
-                    onSearch = {
-                        navController.navigate("search/$it")
-                    }
-                )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFF008BFF))
+                    .statusBarsPadding()
+                    .padding(
+                        vertical = 16.dp,
+                        horizontal = 18.dp
+                    )
+            ) {
+                Column {
+                    Image(
+                        painter = painterResource(R.drawable.photo_icon),
+                        contentDescription = ""
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    SearchBar(
+                        onSearch = {
+                            navController.navigate("search/$it")
+                        }
+                    )
+                }
             }
         }
         item {
@@ -262,7 +274,7 @@ fun HomeView(navController: NavController) {
 }
 
 @Composable
-private fun HumanClothes(item: Clothes, modifier: Modifier = Modifier){
+private fun HumanClothes(item: Clothes, modifier: Modifier = Modifier) {
     Column {
         AsyncImage(
             modifier = modifier
