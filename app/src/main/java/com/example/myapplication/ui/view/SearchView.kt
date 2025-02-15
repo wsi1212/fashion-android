@@ -23,7 +23,7 @@ import com.example.myapplication.R
 import com.example.myapplication.viewmodel.SearchViewModel
 
 @Composable
-fun SearchView(navController: NavController, keyword: String?){
+fun SearchView(navController: NavController, keyword: String?) {
     val viewModel = SearchViewModel()
     LaunchedEffect(Unit) {
         viewModel.search(keyword!!)
@@ -32,7 +32,7 @@ fun SearchView(navController: NavController, keyword: String?){
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-    ){
+    ) {
         item {
             Spacer(Modifier.height(53.dp))
             Row(
@@ -41,7 +41,7 @@ fun SearchView(navController: NavController, keyword: String?){
                 Image(
                     painter = painterResource(R.drawable.back_icon),
                     contentDescription = ""
-                    )
+                )
             }
         }
     }
