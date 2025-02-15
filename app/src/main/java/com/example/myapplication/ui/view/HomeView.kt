@@ -120,7 +120,7 @@ fun HomeView(navController: NavController) {
             .background(Color.White)
     ) {
         item {
-            Box(modifier = Modifier.fillMaxWidth().height(115.dp).background(Color(0xFF008BFF))) {
+            Box(modifier = Modifier.fillMaxWidth().height(125.dp).background(Color(0xFF008BFF))) {
                 SearchBar(
                     modifier = Modifier
                         .padding(horizontal = 18.dp)
