@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -124,12 +125,22 @@ fun HomeView() {
             .background(Color.White)
     ) {
         item {
-            Box(modifier = Modifier.fillMaxWidth().height(115.dp))
-            SearchBar(
-                modifier = Modifier.padding(horizontal = 18.dp),
-                onSearch = {
-                    println(it)
-                }
+            Box(modifier = Modifier.fillMaxWidth().height(115.dp).background(Color(0xFF008BFF))) {
+                SearchBar(
+                    modifier = Modifier
+                        .padding(horizontal = 18.dp)
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 11.dp)
+                    ,
+                    onSearch = {
+                        println(it)
+                    }
+                )
+            }
+        }
+        item {
+            Box(
+                modifier = Modifier.fillMaxWidth().aspectRatio(4f / 3f).background(Color.Gray.copy(0.4f))
             )
         }
         item {
@@ -138,7 +149,7 @@ fun HomeView() {
                 text = "많이 찾아본 인물",
                 fontFamily = pretendard,
                 fontSize = 16.toFigmaSp().sp,
-                fontWeight = FontWeight.W500,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(start = 18.dp)
             )
         }
@@ -166,7 +177,7 @@ fun HomeView() {
                 text = "최애 공유의 착장",
                 fontFamily = pretendard,
                 fontSize = 16.toFigmaSp().sp,
-                fontWeight = FontWeight.W500,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(start = 18.dp)
             )
         }
@@ -194,7 +205,7 @@ fun HomeView() {
                 text = "인기있는 착장",
                 fontFamily = pretendard,
                 fontSize = 16.toFigmaSp().sp,
-                fontWeight = FontWeight.W500,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(start = 18.dp)
             )
         }
@@ -223,7 +234,7 @@ fun HomeView() {
                 text = "당신을 위한 추천 착장",
                 fontFamily = pretendard,
                 fontSize = 16.toFigmaSp().sp,
-                fontWeight = FontWeight.W500,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(start = 18.dp)
             )
         }
