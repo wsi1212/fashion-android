@@ -11,3 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.theme.pretendard
 import com.example.myapplication.ui.toFigmaSp
 
+@Composable
+fun HomeView(){
+
+}

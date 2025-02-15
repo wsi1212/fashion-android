@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.nav.MainNavGraph
 import com.example.myapplication.ui.component.BottomNav
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
@@ -22,16 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             MyApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize(),
-                    bottomBar = {
-                        BottomNav(navController = navController)
-                    }
-                ) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                MainNavGraph(navController)
             }
         }
     }

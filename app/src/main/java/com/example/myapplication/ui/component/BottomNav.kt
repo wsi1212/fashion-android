@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.component
 
-import android.content.res.Resources
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -12,51 +11,60 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myapplication.R
 
 
 class View(
     val icon: Int,
     val route: String,
-    val name: String
 )
 @Composable
 fun BottomNav(navController: NavController){
     val views = listOf(
         View(
-            icon = R.drawable.heart_icon,
-            route = "heart",
-            name = "하트"
+            icon = R.drawable.wishlist_icon,
+            route = "wishlist",
         ),
         View(
-            icon = R.drawable.combi_icon,
-            route = "combi",
-            name = "콤비"
+            icon = R.drawable.combination_icon,
+            route = "combination",
         )
     )
-    Box() {
+    Box {
         NavigationBar(
             modifier = Modifier.align(Alignment.BottomCenter),
             containerColor = Color(0xFFF4F4F4),
             content = {
                 views.forEach {view ->
                     NavigationBarItem(
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = Color.Black,
+                            unselectedIconColor = Color.Gray,
+                            selectedTextColor = Color.Black,
+                            unselectedTextColor = Color.Gray,
+                            indicatorColor = Transparent
+                        ),
                         icon = {
                             Icon(
                                 painter = painterResource(view.icon),
-                                contentDescription = ""
+                                contentDescription = "",
+                                tint = if (currentRoute(navController) == view.route) Color.Black else Color(0xFFBBBBBB)
                             )
                         },
                         onClick = {
-                            TODO()
+                            navController.navigate(route = view.route)
                         },
                         selected = currentRoute(navController) == view.route,
                     )
@@ -80,7 +88,9 @@ fun BottomNav(navController: NavController){
         }
     }
 }
-fun currentRoute(navController: NavController): String?{
-    Log.d("adfj","${navController.currentBackStackEntry?.destination?.route}")
-    return navController.currentBackStackEntry?.destination?.route
+@Composable
+fun currentRoute(navController: NavController): String? {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    Log.d("adfj", "${navBackStackEntry?.destination?.route}")
+    return navBackStackEntry?.destination?.route
 }
