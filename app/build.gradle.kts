@@ -67,4 +67,5 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     implementation("com.google.accompanist:accompanist-pager:0.28.0")
+    implementation("com.google.accompanist:accompanist-coil:0.15.0")
 }

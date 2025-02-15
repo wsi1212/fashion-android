@@ -70,8 +70,12 @@ fun MainNavGraph(navController: NavHostController){
                 composable(route = MainNavGroup.RESULT) {
                     ResultView()
                 }
-                composable(route = MainNavGroup.WEARING) {
-                    WearingView(navController)
+                composable(
+                    route = "wearing/{uri}",
+                    arguments = listOf(navArgument("uri") { type = NavType.StringType })
+                ) { backStackEntry ->
+                    val uri = backStackEntry.arguments?.getString("uri")
+                    WearingView(navController,uri)
                 }
             }
             if (currentRoute != MainNavGroup.SEARCH && currentRoute != MainNavGroup.RESULT && currentRoute != MainNavGroup.WEARING && currentRoute != MainNavGroup.COMBINATION && currentRoute != MainNavGroup.OUTFIT) {

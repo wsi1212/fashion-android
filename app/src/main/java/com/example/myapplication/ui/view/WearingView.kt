@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.view
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -43,13 +44,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
 import coil3.compose.AsyncImage
 import com.example.myapplication.R
 import com.example.myapplication.model.Clothes
 import com.example.myapplication.ui.theme.pretendard
 
 @Composable
-fun WearingView(navController: NavController) {
+fun WearingView(navController: NavController,uri: String?) {
+    println(uri)
+    val uriS = uri?.let { Uri.parse(it) }
     val pagerState = rememberPagerState{2}
     val items = Array(30,{
         WearingViewClothes(
@@ -145,6 +150,11 @@ fun WearingView(navController: NavController) {
                         .clip(RoundedCornerShape(8.dp))
                         .background(Color(0xFFD9D9D9))
                 )
+                {
+                    BigClothesCard(
+                        item = uriS!!
+                    )
+                }
             }
             else {
                 Column(
@@ -218,3 +228,14 @@ data class WearingViewClothes(
     val image: String,
     var isSelected: Boolean
 )
+@Composable
+private fun BigClothesCard(item: Uri, modifier: Modifier = Modifier){
+    AsyncImage(
+        model = item,
+        contentDescription = "",
+        modifier = modifier
+            .fillMaxSize()
+            .clip(RoundedCornerShape(8.dp)),
+        contentScale = ContentScale.Crop
+    )
+}

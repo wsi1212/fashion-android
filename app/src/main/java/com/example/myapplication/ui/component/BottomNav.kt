@@ -27,7 +27,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myapplication.R
+import com.example.myapplication.nav.MainNavGraph
+import com.example.myapplication.nav.MainNavGroup
 import com.example.myapplication.ui.theme.pretendard
+import com.example.myapplication.ui.view.WearingView
 
 
 class View(
@@ -46,10 +49,15 @@ fun BottomNav(
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri: Uri? ->
-            selectedImageUri = uri
-            Log.d("select picture", "picture uri : $uri")
+            uri?.let {
+                selectedImageUri = it
+                val encodedUri = Uri.encode(it.toString())
+                Log.d("select picture", "Encoded URI: $encodedUri")
+                navController.navigate("wearing/$encodedUri")
+            }
         }
     )
+
 
     val views = listOf(
         View(
@@ -59,7 +67,7 @@ fun BottomNav(
         ),
         View(
             icon = R.drawable.wishlist_icon,
-            route = "wearing",
+            route = "wishlist",
             name = "찜 목록"
         )
     )
