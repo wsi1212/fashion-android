@@ -62,7 +62,7 @@ fun MainNavGraph(navController: NavHostController){
                     SearchView(navController, keyword)
                 }
                 composable(route = MainNavGroup.OUTFIT) {
-                    OutfitView()
+                    OutfitView(navController)
                 }
                 composable(route = MainNavGroup.INFORMATION) {
                     InformationView()

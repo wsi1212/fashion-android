@@ -56,7 +56,7 @@ fun BottomNav(navController: NavController = NavController(LocalContext.current)
         ),
         View(
             icon = R.drawable.wishlist_icon,
-            route = "wishlist",
+            route = "outfit",
             name = "찜 목록"
         )
     )
