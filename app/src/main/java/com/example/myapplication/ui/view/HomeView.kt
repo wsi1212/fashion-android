@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -142,8 +143,10 @@ fun HomeView(navController: NavController) {
             ) {
                 Column {
                     Image(
-                        painter = painterResource(R.drawable.photo_icon),
-                        contentDescription = ""
+                        modifier = Modifier.width(90.dp).height(30.dp),
+                        painter = painterResource(R.drawable.logo_black),
+                        contentDescription = "",
+                        contentScale = ContentScale.Fit
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     SearchBar(
