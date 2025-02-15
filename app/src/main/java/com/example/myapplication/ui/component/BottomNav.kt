@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -31,7 +32,7 @@ class View(
     val route: String,
 )
 @Composable
-fun BottomNav(navController: NavController){
+fun BottomNav(navController: NavController,modifier: Modifier){
     val views = listOf(
         View(
             icon = R.drawable.wishlist_icon,
@@ -42,7 +43,9 @@ fun BottomNav(navController: NavController){
             route = "combination",
         )
     )
-    Box {
+    Box(
+        modifier = modifier.background(Transparent)
+    ){
         NavigationBar(
             modifier = Modifier.align(Alignment.BottomCenter),
             containerColor = Color(0xFFF4F4F4),

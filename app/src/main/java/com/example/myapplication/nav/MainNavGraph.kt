@@ -1,10 +1,14 @@
 package com.example.myapplication.nav
 
 import android.util.Log
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,11 +37,11 @@ object MainNavGroup {
 fun MainNavGraph(navController: NavHostController){
     val startDestination = MainNavGroup.HOME
     Log.d("adfjji","${navController.currentBackStackEntry?.destination?.route}")
-    Scaffold (
+    Box (
+        modifier = Modifier.fillMaxSize(),
         content = {
             NavHost(
                 navController = navController,
-                modifier = Modifier.padding(it),
                 startDestination = startDestination
             ){
                 composable(route = MainNavGroup.HOME) {
@@ -65,9 +69,8 @@ fun MainNavGraph(navController: NavHostController){
                     WearingView()
                 }
             }
+            BottomNav(navController, modifier = Modifier.align(Alignment.BottomCenter))
         },
-        bottomBar = {
-            BottomNav(navController)
-        }
+
     )
 }
