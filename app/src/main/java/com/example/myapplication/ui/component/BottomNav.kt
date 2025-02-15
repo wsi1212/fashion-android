@@ -3,12 +3,16 @@ package com.example.myapplication.ui.component
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -27,18 +31,16 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.pretendard
-import com.example.myapplication.ui.toFigmaSp
 
 
 class View(
@@ -46,8 +48,12 @@ class View(
     val route: String,
     val name: String
 )
+
 @Composable
-fun BottomNav(navController: NavController = NavController(LocalContext.current), modifier: Modifier = Modifier){
+fun BottomNav(
+    navController: NavController = NavController(LocalContext.current),
+    modifier: Modifier = Modifier
+) {
     val views = listOf(
         View(
             icon = R.drawable.home_icon,
@@ -60,26 +66,33 @@ fun BottomNav(navController: NavController = NavController(LocalContext.current)
             name = "찜 목록"
         )
     )
+
     Box(
-        modifier = modifier.background(Transparent)
+        modifier = modifier
+            .background(Color.White)
+            .background(Transparent),
+        contentAlignment = Alignment.BottomCenter
     ) {
-        NavigationBar(
-            tonalElevation = 10.dp,
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .drawBehind {
-                    // 상단에만 선(보더)를 그립니다.
-                    drawLine(
-                        color = Color(0xFFD9D9D9), // 원하는 색상으로 변경 가능
-                        start = Offset(0f, 0f),
-                        end = Offset(size.width, 0f),
-                        strokeWidth = 1.dp.toPx() // 원하는 두께로 변경 가능
-                    )
-                }
-            ,
-            containerColor = Color(0xFFFFFFFF),
-            content = {
-                views.forEachIndexed() { index,view ->
+        Column(
+            Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Bottom // 아래 정렬
+        ) {
+            NavigationBar(
+                tonalElevation = 10.dp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .drawBehind {
+                        // 상단에만 선(보더)를 그립니다.
+                        drawLine(
+                            color = Color(0xFFD9D9D9), // 원하는 색상으로 변경 가능
+                            start = Offset(0f, 0f),
+                            end = Offset(size.width, 0f),
+                            strokeWidth = 1.dp.toPx() // 원하는 두께로 변경 가능
+                        )
+                    },
+                containerColor = Color(0xFFFFFFFF),
+            ) {
+                views.forEachIndexed { index, view ->
                     NavigationBarItem(
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = Color.Black,
@@ -111,16 +124,18 @@ fun BottomNav(navController: NavController = NavController(LocalContext.current)
                         },
                         selected = currentRoute(navController) == view.route,
                     )
-                    if (index == 0){
+                    if (index == 0) {
                         Spacer(modifier = Modifier.width(80.dp))
                     }
                 }
             }
-        )
+        }
+
+        // 중앙 버튼 배치 (입혀보기)
         Column(
             Modifier
-                .align(Alignment.TopCenter)
-                .padding(bottom = 20.dp)
+                .align(Alignment.BottomCenter)
+                .offset(y = (-55).dp) // 네비게이션 바 위로 이동
         ) {
             Box(
                 Modifier
@@ -147,6 +162,7 @@ fun BottomNav(navController: NavController = NavController(LocalContext.current)
         }
     }
 }
+
 @Composable
 fun currentRoute(navController: NavController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()

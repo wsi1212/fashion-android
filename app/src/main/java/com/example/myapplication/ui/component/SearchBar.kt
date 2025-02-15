@@ -26,12 +26,14 @@ fun SearchBar(
     var searchKeyword by remember { mutableStateOf("") }
 
     Box(
-        modifier = modifier.fillMaxWidth().border(2.dp,Color(0xFF008BFF), CircleShape)
+        modifier = modifier
+            .fillMaxWidth()
+            .border(2.dp, Color(0xFF008BFF), CircleShape)
     ) {
         OutlinedTextField(
             value = searchKeyword,
             onValueChange = { searchKeyword = it },
-            placeholder = { Text("최애를 입력하세요.") },
+            placeholder = { Text("최애를 검색해보세요.") },
             modifier = Modifier
                 .fillMaxWidth(),
             shape = CircleShape,
@@ -44,13 +46,17 @@ fun SearchBar(
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
-                containerColor = Color.White
+                containerColor = Color.White,
+                focusedTextColor = Color.Black,
             )
         )
         Image(
-            modifier = Modifier.align(Alignment.CenterEnd).padding(end = 20.dp).clickable { onSearch(searchKeyword) },
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(end = 20.dp)
+                .clickable { onSearch(searchKeyword) },
             painter = painterResource(R.drawable.search_icon),
             contentDescription = ""
-            )
+        )
     }
 }

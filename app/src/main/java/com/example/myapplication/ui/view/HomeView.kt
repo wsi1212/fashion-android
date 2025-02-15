@@ -139,7 +139,7 @@ fun HomeView(navController: NavController) {
             )
         }
         item {
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(48.dp))
             Text(
                 text = "많이 찾아본 인물",
                 fontFamily = pretendard,
@@ -167,13 +167,13 @@ fun HomeView(navController: NavController) {
             )
         }
         item {
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(64.dp))
             Text(
-                text = "최애 공유의 착장",
+                text = "최애 손흥민의 착장",
                 fontFamily = pretendard,
                 fontSize = 16.toFigmaSp().sp,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(start = 18.dp)
+                modifier = Modifier.padding(start = 16.dp)
             )
         }
         item {
@@ -195,19 +195,18 @@ fun HomeView(navController: NavController) {
             )
         }
         item {
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(64.dp))
             Text(
                 text = "인기있는 착장",
                 fontFamily = pretendard,
                 fontSize = 16.toFigmaSp().sp,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(start = 18.dp)
+                modifier = Modifier.padding(start = 16.dp)
             )
         }
         item {
             Spacer(modifier = Modifier.height(12.dp))
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(20.dp),
                 content = {
                     items(famousItems) { item ->
                         Row {
@@ -224,19 +223,18 @@ fun HomeView(navController: NavController) {
             )
         }
         item {
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(64.dp))
             Text(
                 text = "당신을 위한 추천 착장",
                 fontFamily = pretendard,
                 fontSize = 16.toFigmaSp().sp,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(start = 18.dp)
+                modifier = Modifier.padding(start = 16.dp)
             )
         }
         item {
             Spacer(modifier = Modifier.height(12.dp))
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(20.dp),
                 content = {
                     items(youRecommendItem) { item ->
                         Row {
