@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.myapplication.R
+import com.example.myapplication.nav.MainNavGroup
 import com.example.myapplication.ui.component.SearchBar
 import com.example.myapplication.ui.theme.pretendard
 import com.example.myapplication.ui.toFigmaSp
@@ -145,7 +146,10 @@ fun SearchView(navController: NavController, keyword: String?) {
                                 .width(161.dp)
                                 .height(250.dp)
                                 .clip(RoundedCornerShape(8.dp))
-                                .background(Color.LightGray),
+                                .background(Color.LightGray)
+                                .clickable {
+                                    navController.navigate(MainNavGroup.OUTFIT)
+                                },
                             contentScale = ContentScale.Crop
                         )
                     }

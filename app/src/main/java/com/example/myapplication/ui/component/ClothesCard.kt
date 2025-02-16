@@ -15,26 +15,14 @@ import coil3.compose.rememberAsyncImagePainter
 import com.example.myapplication.model.Clothes
 
 @Composable
-fun ClothesCard(item: Clothes, modifier: Modifier = Modifier) {
+fun ClothesCard(item: String, modifier: Modifier = Modifier) {
     AsyncImage(
         modifier = modifier
             .width(161.dp)
             .height(250.dp)
             .clip(RoundedCornerShape(8.dp)),
-        model = item.image,
-        contentDescription = item.name,
+        model = item,
+        contentDescription = "",
         contentScale = ContentScale.Crop
-    )
-}
-
-@Preview
-@Composable
-fun ClothesCardPreview() {
-    ClothesCard(
-        Clothes(
-            name = "T-shirt",
-            price = 1000,
-            image = "https://image.msscdn.net/thumbnails/images/goods_img/20240214/3866831/3866831_17095239369616_big.jpg?w=1200"
-        )
     )
 }

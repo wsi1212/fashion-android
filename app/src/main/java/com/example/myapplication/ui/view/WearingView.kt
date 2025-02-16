@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,13 +50,20 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import coil3.compose.AsyncImage
 import com.example.myapplication.R
-import com.example.myapplication.model.Clothes
 import com.example.myapplication.ui.theme.pretendard
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.placeholder
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import com.google.accompanist.placeholder.material.shimmer
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun WearingView(navController: NavController, uri: String?) {
     println(uri)
+    val coroutineScope = rememberCoroutineScope()
+    var isRoading by remember { mutableStateOf(false) }
+    var isSuccess by remember { mutableStateOf(false) }
     val uriS = uri?.let { Uri.parse(it) }
     val pagerState = rememberPagerState { 2 }
 
@@ -63,13 +71,28 @@ fun WearingView(navController: NavController, uri: String?) {
     var selectedIndices by remember { mutableStateOf(listOf<Int>()) }
 
     // 기본 아이템 리스트 (변경되지 않음)
-    val items = List(30) { index ->
+    val items = listOf(
         WearingViewClothes(
-            name = "one",
-            price = index,
-            image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsSEGsb-eTzQtV9IRS3lbfufgSsDImqQEHWA&s"
-        )
-    }
+            name = "black",
+            price = 1000,
+            image = "https://cdn.discordapp.com/attachments/1339576223348559914/1340487518163828807/3469871_17321622059740_big.png?ex=67b289c9&is=67b13849&hm=765c392f606047453a8b014c108092b381af2fa304a4b43d18f16837ddce5b9a&"
+        ),
+        WearingViewClothes(
+            name = "pants",
+            price = 1000,
+            image = "https://cdn.discordapp.com/attachments/1339576223348559914/1340487934058696774/4586031_17307254842477_big.png?ex=67b28a2c&is=67b138ac&hm=7a5f3d2bbe29bbbef8fb56fc6d685b5ec695cbdbfa51376920232dd898af3684&"
+        ),
+        WearingViewClothes(
+            name = "black_short",
+            price = 1000,
+            image = "https://cdn.discordapp.com/attachments/1339576223348559914/1340506490250727504/70ed849130481ea56d4c9e1c6eecd88c.png?ex=67b29b74&is=67b149f4&hm=3c4c4742b37fd8f1fc7609536213554acfd5cbc916bbc0e52c107f24654377a5&"
+        ),
+        WearingViewClothes(
+            name = "green_jackit",
+            price = 1000,
+            image = "https://cdn.discordapp.com/attachments/1339576223348559914/1340508845415334034/image.png?ex=67b29da6&is=67b14c26&hm=fd922c79a4af3cba92ea6d6222506986221c2908d5b7908450132dd347cfc9c0&"
+        ),
+    )
 
     // 선택된 아이템들
     val selectedItems = selectedIndices.map { items[it] }
@@ -110,17 +133,6 @@ fun WearingView(navController: NavController, uri: String?) {
                 Spacer(Modifier.width(4.dp))
                 Image(
                     modifier = Modifier.align(Alignment.CenterVertically),
-                    painter = painterResource(R.drawable.plus_icon),
-                    contentDescription = ""
-                )
-                Spacer(Modifier.width(4.dp))
-                SmallPartCard(
-                    modifier = Modifier.align(Alignment.CenterVertically),
-                    item = selectedItems.getOrNull(2)
-                )
-                Spacer(Modifier.width(4.dp))
-                Image(
-                    modifier = Modifier.align(Alignment.CenterVertically),
                     painter = painterResource(R.drawable.equal_icon),
                     contentDescription = ""
                 )
@@ -134,7 +146,7 @@ fun WearingView(navController: NavController, uri: String?) {
                             .clip(RoundedCornerShape(8.dp))
                             .background(Color(0xFFD9D9D9))
                     ) {
-                        BigClothesCard(item = uriS!!)
+                        BigClothesCard(item = uriS!!, isSuccess = isSuccess, isRoading = isRoading)
                     }
                 } else {
                     Column(modifier = Modifier.fillMaxSize()) {
@@ -147,7 +159,15 @@ fun WearingView(navController: NavController, uri: String?) {
                                 .border(2.dp, Color(0xFF008BFF), CircleShape)
                         ) {
                             Text(
-                                modifier = Modifier.align(Alignment.Center),
+                                modifier = Modifier.align(Alignment.Center).clickable {
+                                    coroutineScope.launch {
+                                        isRoading = true
+                                        pagerState.animateScrollToPage(0)
+                                        delay(3000L)
+                                        isSuccess = true
+                                        isRoading = false
+                                    }
+                                },
                                 text = "최애 입히기",
                                 fontFamily = pretendard,
                                 fontWeight = FontWeight.Bold,
@@ -172,7 +192,7 @@ fun WearingView(navController: NavController, uri: String?) {
                                         selectedIndices = if (index in selectedIndices) {
                                             // 이미 선택된 경우 제거
                                             selectedIndices.filter { it != index }
-                                        } else if (selectedIndices.size < 3) {
+                                        } else if (selectedIndices.size < 2) {
                                             // 선택되지 않았고 3개 미만인 경우 추가
                                             selectedIndices + index
                                         } else {
@@ -253,13 +273,27 @@ private fun SmallPartCard(item: WearingViewClothes?, modifier: Modifier = Modifi
     }
 }
 @Composable
-private fun BigClothesCard(item: Uri, modifier: Modifier = Modifier){
-    AsyncImage(
-        model = item,
-        contentDescription = "",
-        modifier = modifier
-            .fillMaxSize()
-            .clip(RoundedCornerShape(8.dp)),
-        contentScale = ContentScale.Crop
-    )
+private fun BigClothesCard(item: Uri, modifier: Modifier = Modifier,isSuccess: Boolean, isRoading:Boolean){
+    if (isRoading){
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(8.dp))
+                .background(Color.LightGray.copy(alpha = 0.5f))
+                .placeholder(
+                    visible = true,
+                    highlight = PlaceholderHighlight.shimmer() // 최신 shimmer 적용
+                )
+        )
+    }
+    else {
+        AsyncImage(
+            model = if (!isSuccess) item else "https://cdn.discordapp.com/attachments/1339576223348559914/1340510997848391710/Firefly_20250216113128.png?ex=67b29fa7&is=67b14e27&hm=a5ae276dbd76b8bc2f82fa2b620609242ab382f95c0c3f9e06804532602d008f&",
+            contentDescription = "",
+            modifier = modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(8.dp)),
+            contentScale = ContentScale.Crop
+        )
+    }
 }

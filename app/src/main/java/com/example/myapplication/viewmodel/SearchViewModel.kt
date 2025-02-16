@@ -3,7 +3,8 @@ package com.example.myapplication.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.RetrofitClient
+import com.example.myapplication.RetrofitClient1
+import com.example.myapplication.RetrofitClient2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +25,7 @@ class SearchViewModel : ViewModel(){
         _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = RetrofitClient.apiService.getCrawledImages(keyword + " 패션").execute()
+                val response = RetrofitClient1.apiService.getCrawledImages(keyword + " 패션").execute()
                 if (response.isSuccessful) {
                     val images = response.body()?.images ?: emptyList()
                     _uiState.update { it.copy(images = images) }
